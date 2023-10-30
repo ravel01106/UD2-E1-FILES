@@ -8,6 +8,9 @@
   "main": "src/app.js",
   "scripts": {
     "dev": "ts-node-dev --respawn src/app.ts",
+    "dev-async": "ts-node-dev --respawn src/appAsync.ts",
+    "dev-callback": "ts-node-dev --respawn src/appCallback.ts",
+    "dev-promise": "ts-node-dev --respawn src/appPromise.ts",
     "start": "node ./dist/app",
     "build": "npm run clean && tsc",
     "exec": "npm run build & npm run start",
