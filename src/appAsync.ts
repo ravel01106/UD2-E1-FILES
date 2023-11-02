@@ -1,16 +1,20 @@
-import { jsonToObjectAsyncAwait } from "./aync-await/jsonObjectAsync"
+import { jsonToObjectAsyncAwait } from './aync-await/jsonObjectAsync'
 
-function main(): void {
+async function main() {
   console.log('Esto es una función para el tema Async')
-  // const ciudadesPath = __dirname + '/data/ciudades.json'
-  const arrayPaths: string[] = [`/data/ciudades.json`, `/data/products.json`]
-
-  arrayPaths.map((file) =>  {
-    jsonToObjectAsyncAwait(__dirname + file)
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err))
-
-  })
+  const citiesPath = __dirname + '/data/ciudades.json'
+  const productsPath = __dirname + '/data/products.json'
+  // const arrayPaths: string[] = [`/data/ciudades.json`, `/data/products.json`]
+  try {
+    const citiesData = await jsonToObjectAsyncAwait(citiesPath)
+    const productsData = await jsonToObjectAsyncAwait(productsPath)
+    console.log('\nDATOS DE LAS CUIDADES:\n')
+    console.log(citiesData)
+    console.log('\n\nDATOS DE LOS PRODUCTOS:\n')
+    console.log(productsData)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 main()
