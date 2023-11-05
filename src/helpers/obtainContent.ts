@@ -13,19 +13,16 @@ const obtainContentWithoutFilter = <TObj>(fields: string[], jsonData: TObj[]): s
     let content = obtainHeader(fields)
 
     jsonData.forEach((data) => {
-
         fields.forEach((field) => {
-
             Object.keys(data as object).map((key) => {
                 if (field.toLowerCase() == key.toLowerCase()) {
                     content += data[key as keyof TObj] + ','
                 }
-
             })
-
         })
         content = content.slice(0, -1) + '\n'
     })
+    
     return content
 }
 

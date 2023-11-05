@@ -3,7 +3,7 @@ import { ObjectToCSV } from "../interfaces/objectToCSV";
 import { CSVCallback } from "../interfaces/objectToCSVCallback";
 import { obtainContentWithoutFilter, obtainContentWithFilter } from '../helpers/obtainContent'
 
-function objectToCSVCallback<T>(params:ObjectToCSV<T>, callback:CSVCallback) {
+function objectToCSVCallback<T>(params:ObjectToCSV<T>, callback:CSVCallback):void {
     let {jsonData, fields, filePath, filter} = params
     let content = ''
 
