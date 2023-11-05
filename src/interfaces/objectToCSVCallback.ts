@@ -1,0 +1,1 @@
+export type CSVCallback = (err: Error | null, data?: true) => void

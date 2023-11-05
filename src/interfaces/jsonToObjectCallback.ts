@@ -1,0 +1,1 @@
+export type jsonCallback = (err: NodeJS.ErrnoException | null, data?: object[]) => void
