@@ -1,23 +1,14 @@
-import { promises as fsPromises } from 'fs'
-import { obtainContentWithoutFilter, obtainContentWithFilter } from '../helpers/obtainContent'
+// import { promises as fsPromises } from 'fs'
+import { obtainContent } from '../helpers/obtainContent'
 import { ObjectToCSV } from '../interfaces/objectToCSV'
+import { writeToCSVPromise } from '../helpers/writeToCSV'
 
-
-function objectToCSVPromise<T>(params:ObjectToCSV<T>): Promise<boolean> {
+function objectToCSVPromise<T>(params: ObjectToCSV<T>): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
-    let {jsonData, fields, filePath, filter} = params
-    let content = ''
+    let { jsonData, fields, filePath, filter } = params
+    let content = obtainContent<T>(fields, jsonData as T[], filter)
 
-    if (filter) {
-      content = obtainContentWithFilter<T>(fields, jsonData as T[], filter)
-    } else {
-      content = obtainContentWithoutFilter<T>(fields, jsonData as T[])
-    }
-
-    fsPromises
-      .writeFile(filePath, content)
-      .then(() => resolve(true))
-      .catch(() => reject(false))
+    writeToCSVPromise(resolve, reject, filePath, content)
   })
 }
 

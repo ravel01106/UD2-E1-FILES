@@ -1,23 +1,14 @@
-import fs from 'fs'
-import { ObjectToCSV } from "../interfaces/objectToCSV";
-import { CSVCallback } from "../interfaces/objectToCSVCallback";
-import { obtainContentWithoutFilter, obtainContentWithFilter } from '../helpers/obtainContent'
+//import fs from 'fs'
+import { ObjectToCSV } from '../interfaces/objectToCSV'
+import { CSVCallback } from '../interfaces/objectToCSVCallback'
+import { obtainContent } from '../helpers/obtainContent'
+import { writeToCSVCallback } from '../helpers/writeToCSV'
 
-function objectToCSVCallback<T>(params:ObjectToCSV<T>, callback:CSVCallback):void {
-    let {jsonData, fields, filePath, filter} = params
-    let content = ''
+function objectToCSVCallback<T>(params: ObjectToCSV<T>, callback: CSVCallback): void {
+  let { jsonData, fields, filePath, filter } = params
+  let content = obtainContent<T>(fields, jsonData as T[], filter)
 
-    if (filter) {
-        content = obtainContentWithFilter<T>(fields, jsonData as T[], filter)
-    } else {
-        content = obtainContentWithoutFilter<T>(fields, jsonData as T[])
-    }
-
-    fs.writeFile(filePath, content, (err) => {
-        if (err != null) callback(err)
-        else callback(null, true)
-    })
+  writeToCSVCallback(filePath, content, callback)
 }
 
-
-export {objectToCSVCallback}
+export { objectToCSVCallback }

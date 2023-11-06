@@ -4,37 +4,35 @@ import { City } from './interfaces/City'
 import { Products } from './interfaces/Products'
 import { ObjectToCSV } from './interfaces/objectToCSV'
 function main(): void {
-  console.log('Esto es una función para el tema Promise')
+  console.log('-----------PROMISE-----------\n')
 
   jsonToObjectPromise(__dirname + '/data/ciudades.json')
     .then((data) => {
-      let params:ObjectToCSV<City> = {
+      let params: ObjectToCSV<City> = {
         jsonData: data as City[],
         fields: ['pais', 'continente'],
-        filePath:  __dirname + '/exports/ciudades.csv'
+        filePath: __dirname + '/exports/ciudades.csv',
       }
 
       objectToCSVPromise<City>(params)
-        .then(() => console.log('Se ha creado correctamente'))
+        .then(() => console.log('Se ha creado el fichero con los datos correctamente'))
         .catch(() => console.log('Fallo al crearse el fichero'))
-
-      })
+    })
     .catch((err) => console.log(err))
 
   jsonToObjectPromise(__dirname + '/data/products.json')
     .then((data) => {
-      let params:ObjectToCSV<Products> = {
+      let params: ObjectToCSV<Products> = {
         jsonData: data as Products[],
         fields: ['article', 'category', 'name'],
-        filePath:  __dirname + '/exports/products.csv',
+        filePath: __dirname + '/exports/products.csv',
         filter: (elto) => elto.category == 'A',
       }
 
       objectToCSVPromise<Products>(params)
-        .then(() => console.log('Se ha creado correctamente'))
+        .then(() => console.log('Se ha creado el fichero con los datos correctamente'))
         .catch(() => console.log('Fallo al crearse el fichero'))
-    
-      })
+    })
     .catch((err) => console.log(err))
 }
 

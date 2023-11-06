@@ -5,28 +5,28 @@ import { Products } from './interfaces/Products'
 import { ObjectToCSV } from './interfaces/objectToCSV'
 
 async function main() {
-  console.log('Esto es una función para el tema Async')
+  console.log('-----------ASYNC AWAIT-----------\n')
   try {
     const citiesData = await jsonToObjectAsyncAwait(__dirname + '/data/ciudades.json')
     const productsData = await jsonToObjectAsyncAwait(__dirname + '/data/products.json')
-    console.log("Los datos se han leido correctamente.")
+    console.log('Los datos se han leido correctamente.')
 
-    let paramsCities:ObjectToCSV<City> = {
+    let paramsCities: ObjectToCSV<City> = {
       jsonData: citiesData as City[],
       fields: ['capital', 'continente'],
-      filePath:  __dirname + '/exports/ciudades.csv'
+      filePath: __dirname + '/exports/ciudades.csv',
+      filter: (elto) => elto.Pais === 'Alemania',
     }
 
-    let paramsProducts:ObjectToCSV<Products> = {
+    let paramsProducts: ObjectToCSV<Products> = {
       jsonData: productsData as Products[],
       fields: ['article', 'stock', 'category'],
-      filePath:  __dirname + '/exports/products.csv',
-      filter: (elto) => elto.category == 'C',
+      filePath: __dirname + '/exports/products.csv',
     }
 
     await objectToCSVAsync<City>(paramsCities)
     await objectToCSVAsync<Products>(paramsProducts)
-    console.log("Los datos se han introducido correctamente.")
+    console.log('Los datos se han introducido correctamente.')
   } catch (error) {
     console.log(error)
   }

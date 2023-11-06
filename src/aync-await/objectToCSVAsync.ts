@@ -1,27 +1,13 @@
-
-import { promises as fsPromises } from 'fs'
+//import { promises as fsPromises } from 'fs'
 import { ObjectToCSV } from '../interfaces/objectToCSV'
-import { obtainContentWithoutFilter, obtainContentWithFilter } from '../helpers/obtainContent'
+import { obtainContent } from '../helpers/obtainContent'
+import { writeToCSVAsync } from '../helpers/writeToCSV'
 
-async function objectToCSVAsync<T>(params:ObjectToCSV<T>):Promise<boolean> {
-    let {jsonData, fields, filePath, filter} = params
-    let content = ''
+async function objectToCSVAsync<T>(params: ObjectToCSV<T>): Promise<boolean> {
+  let { jsonData, fields, filePath, filter } = params
+  let content = obtainContent<T>(fields, jsonData as T[], filter)
 
-    if (filter) {
-        content = obtainContentWithFilter<T>(fields, jsonData as T[], filter)
-    } else {
-        content = obtainContentWithoutFilter<T>(fields, jsonData as T[])
-    }
-    try {
-        await fsPromises.writeFile(filePath, content)
-        return true
-    } catch (error) {
-        if (error instanceof Error) {
-            throw new Error(error.message)
-        } else {
-            throw new Error('error desconocido')
-        }
-    }
+  return writeToCSVAsync(filePath, content)
 }
 
-export {objectToCSVAsync}
+export { objectToCSVAsync }
